@@ -1,14 +1,13 @@
 import { closeReadLine, UserInput } from "./inputs";
-import { addPlayerToGeneralList, makeGame, endGame, generalList, gameInProgress, currentGame } from "./functions";
+import { addPlayerToGeneralList, makeGame, endGame, gameInProgress, currentGame, showGeneralList } from "./functions";
 
 export async function showMenu() {
 
     while (true) {
-
         console.log("\nLIGA DE BALONCESTO")
-        console.log("\n Selecciona una opcion:")
-        console.log("\n1) Agregar jugador")
-        console.log("\n2) Ver listado")
+        console.log("\n Selecciona una opcion:\n")
+        console.log("1) Agregar jugador")
+        console.log("2) Ver listado")
         console.log("3) Iniciar proximo juego")
         console.log("4) Finalizar juego")
         console.log("5) Salir del programa\n")
@@ -20,6 +19,7 @@ export async function showMenu() {
             closeReadLine();
             break;
         }
+
         switch (choise) {
             case "1":
                 console.log('\n Option 1 selected...');
@@ -28,19 +28,12 @@ export async function showMenu() {
 
             case "2":
                 console.log('\n Option 2 selected...');
-                generalList.forEach((player, index) => {
-                    console.log(`${index + 1} - ${player}`)
-                });
+                showGeneralList();
                 break;
 
             case "3":
                 console.log('\n Option 3 selected...');
-                setTimeout(() => {
                     makeGame();
-                    setTimeout(() => {
-                        showMenu();
-                    }, 1000);
-                }, 1000)
                 break;
 
             case "4":

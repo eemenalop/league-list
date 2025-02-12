@@ -22,21 +22,19 @@ export async function addPlayerToGeneralList() {
         addPlayerToGeneralList();
     } else {
         console.log("Regresando al menu...")
-        showMenu();
+        setTimeout(() => {
+            showMenu();
+        }, 1000)
     }
 }
 
 export async function makeGame() {
 
-    if (!gameInProgress) {
+    if (gameInProgress) {
         console.log("Hay un juego en curso.");
-        showMenu();
-        return;
     }
     if (generalList.length < 10) {
         console.log("Min 10 players to start a game.");
-        showMenu();
-        return;
     };
     currentGame[0] = queuelList.splice(0, 10);
     gameInProgress = true;
@@ -74,4 +72,13 @@ export async function endGame(team1: string[], team2: string[]) {
             showMenu();
             return;
         }
+}
+
+export function showGeneralList() {
+    if (generalList.length === 0) {
+        console.log('\nThere are not players on the list');
+    }
+    generalList.forEach((player, index) => {
+        console.log(`${index + 1} - ${player}`)
+    });
 }
