@@ -23,7 +23,7 @@ export async function showMenu() {
         switch (choise) {
             case "1":
                 console.log('\n Option 1 selected...');
-                addPlayerToGeneralList();
+                await addPlayerToGeneralList();
                 break;
 
             case "2":
@@ -39,12 +39,11 @@ export async function showMenu() {
             case "4":
                 console.log('Option 4 selected...');
                 if (gameInProgress) {
-                    endGame(currentGame[0], currentGame[1]);
+                    endGame(currentGame.team1, currentGame.team2);
                 } else {
                     console.log("No hay juego en curso");
-                    setTimeout(() => {
-                        showMenu();
-                    }, 1000);
+                    await showMenu();
+                    return;
                 }
                 break;
             
