@@ -5,13 +5,14 @@ import { showMenu } from "./main";
 export const generalList: string[] = [];
 const queuelList: string[] = [];
 export let gameInProgress = false;
+export let winnerTeam: string[] =[];
 
 interface CurrentGame {
     team1: string[],
     team2: string[]
 }
 
-export let currentGame: CurrentGame ={team1: [], team2: []}
+export let currentGame: CurrentGame = {team1: [], team2: []}
 
 export async function addPlayerToGeneralList() {
 
@@ -36,52 +37,62 @@ export function makeGame() {
 
     if (gameInProgress) {
         console.log("Hay un juego en curso.");
+        console.log(`Teams currently playing: \n${currentGame.team1}\n${currentGame.team2}`);
         return;
     }
     if (generalList.length < 10) {
         console.log("Min 10 players to start a game.");
         return;
     };
-    
-    currentGame.team1 = queuelList.splice(0, 5);
-    currentGame.team2 = queuelList.splice(0, 5);
 
-    gameInProgress = true;
+    if (winnerTeam.length === 0) {
+        currentGame.team1 = queuelList.splice(0, 5);
+        currentGame.team2 = queuelList.splice(0, 5);
 
-    console.log("Iniciando juego...")
+        gameInProgress = true;
 
-    console.log("Team 1:", currentGame.team1);
-    console.log("Team 2:", currentGame.team2);
+        console.log("Iniciando juego...");
 
-    return {team1: currentGame.team1, team2:currentGame.team2};
+        console.log("Team 1:", currentGame.team1);
+        console.log("Team 2:", currentGame.team2);
+    } else {
+        currentGame.team1 = winnerTeam;
+        currentGame.team2 = queuelList.splice(0, 5);
+
+        gameInProgress = true;
+
+        console.log("Iniciando juego...")
+
+        console.log("Team 1:", currentGame.team1);
+        console.log("Team 2:", currentGame.team2);
+    }
 };
 
 export async function endGame(team1: string[], team2: string[]) {
-
+    
     console.log('\nPartido en curso');
     console.log('↓↓↓↓↓');
     console.log("Team 1: ", team1);
     console.log("Team 2: ", team2);
 
-    const winnerTeam = (await UserInput.getNumber('Select the winner team: '));
-        if (Number(winnerTeam) === 1) {
+    const winner = (await UserInput.getNumber('Select the winner team: '));
+        if (Number(winner) === 1) {
             queuelList.push(...team2);
             team2 = [];
+            winnerTeam = team1;
             console.log("El equipo 1 sigue jugando");
             gameInProgress = false;
-            await showMenu();
-            return;
-        } else if (Number(winnerTeam) === 2) {
+            showMenu();
+        } else if (Number(winner) === 2) {
             queuelList.push(...team1);
             team1 = [];
+            winnerTeam = team2;
             console.log("El equipo 2 sigue jugando");
             gameInProgress = false;
-            await showMenu();
-            return;
+            showMenu();
         } else {
             console.log("Opcion no valida");
-            await showMenu();
-            return;
+            showMenu();
         }
 }
 

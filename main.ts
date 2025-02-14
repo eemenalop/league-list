@@ -32,8 +32,8 @@ export async function showMenu() {
                 break;
 
             case "3":
-                console.log('\n Option 3 selected...');
-                    makeGame();
+                console.log('\n Option 3 selected...')
+                makeGame();
                 break;
 
             case "4":
@@ -42,16 +42,12 @@ export async function showMenu() {
                     endGame(currentGame.team1, currentGame.team2);
                 } else {
                     console.log("No hay juego en curso");
-                    await showMenu();
-                    return;
                 }
                 break;
             
             default:
                 console.log("OPCION INVALIDA!");
-                setTimeout(() => {
-                    showMenu();
-                }, 1000);
+                break;
         }
     }
 
