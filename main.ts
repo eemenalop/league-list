@@ -4,13 +4,13 @@ import { addPlayerToGeneralList, makeGame, endGame, gameInProgress, currentGame,
 export async function showMenu() {
 
     while (true) {
-        console.log("\nLIGA DE BALONCESTO")
-        console.log("\n Selecciona una opcion:\n")
-        console.log("1) Agregar jugador")
-        console.log("2) Ver listado")
-        console.log("3) Iniciar proximo juego")
-        console.log("4) Finalizar juego")
-        console.log("5) Salir del programa\n")
+        console.log("\nBasketball League")
+        console.log("\n Choose an option: \n")
+        console.log("1) Add a Player")
+        console.log("2) Check the general list.")
+        console.log("3) Start the game")
+        console.log("4) End game")
+        console.log("5) Exit\n")
 
         const choise = (await UserInput.getString("Select an option: ")).toString();
 
@@ -41,16 +41,16 @@ export async function showMenu() {
                 if (gameInProgress) {
                     endGame(currentGame.team1, currentGame.team2);
                 } else {
-                    console.log("No hay juego en curso");
+                    console.log("There is not game in progress");
                 }
                 break;
             
             default:
                 console.log("OPCION INVALIDA!");
                 break;
-        }
-    }
+        };
+    };
 
-}
+};
 
 showMenu();

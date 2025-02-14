@@ -17,6 +17,11 @@ export let currentGame: CurrentGame = {team1: [], team2: []}
 export async function addPlayerToGeneralList() {
 
     const player = (await UserInput.getString('Enter a player: ')).toString();
+
+    if (!player) {
+        console.log('ENTER A VALID NAME!')
+        return;
+    }
     generalList.push(player);
     queuelList.push(player);
     generalList.forEach((player, index) => {
@@ -24,19 +29,19 @@ export async function addPlayerToGeneralList() {
     });
     console.log(`\n Player \'${player}\' added to the list...`)
     
-    const addOtherPlayer = await UserInput.getString('Desea agregar otro jugador? (s/n): ');
-    if (addOtherPlayer.toLowerCase() == 's') {
+    const addOtherPlayer = await UserInput.getString('Do you want to add another player? (y/n): ');
+    if (addOtherPlayer.toLowerCase() == 'y') {
         await addPlayerToGeneralList();
     } else {
-        console.log("Regresando al menu...")
-        await showMenu();
+        console.log("Returning to the main menu...")
+        showMenu();
     }
 }
 
 export function makeGame() {
 
     if (gameInProgress) {
-        console.log("Hay un juego en curso.");
+        console.log("There is a game in progress");
         console.log(`Teams currently playing: \n${currentGame.team1}\n${currentGame.team2}`);
         return;
     }
@@ -51,7 +56,7 @@ export function makeGame() {
 
         gameInProgress = true;
 
-        console.log("Iniciando juego...");
+        console.log("Starting de game");
 
         console.log("Team 1:", currentGame.team1);
         console.log("Team 2:", currentGame.team2);
@@ -61,7 +66,7 @@ export function makeGame() {
 
         gameInProgress = true;
 
-        console.log("Iniciando juego...")
+        console.log("Starting de game");
 
         console.log("Team 1:", currentGame.team1);
         console.log("Team 2:", currentGame.team2);
@@ -70,7 +75,7 @@ export function makeGame() {
 
 export async function endGame(team1: string[], team2: string[]) {
     
-    console.log('\nPartido en curso');
+    console.log('\nGame in progress between: ');
     console.log('↓↓↓↓↓');
     console.log("Team 1: ", team1);
     console.log("Team 2: ", team2);
@@ -80,18 +85,18 @@ export async function endGame(team1: string[], team2: string[]) {
             queuelList.push(...team2);
             team2 = [];
             winnerTeam = team1;
-            console.log("El equipo 1 sigue jugando");
+            console.log("Team 1 will continue playing.");
             gameInProgress = false;
             showMenu();
         } else if (Number(winner) === 2) {
             queuelList.push(...team1);
             team1 = [];
             winnerTeam = team2;
-            console.log("El equipo 2 sigue jugando");
+            console.log("Team 2 will continue playing.");
             gameInProgress = false;
             showMenu();
         } else {
-            console.log("Opcion no valida");
+            console.log("Option is not valid.");
             showMenu();
         }
 }

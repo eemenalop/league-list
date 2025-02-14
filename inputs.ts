@@ -14,6 +14,7 @@ export function askQuestion(question: string): Promise<string> {
 
 export function closeReadLine(){
     rl.close();
+    return;
 }
 
 export class UserInput{
